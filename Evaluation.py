@@ -1,0 +1,44 @@
+def nutrient_profiling(nutrients):
+    """Evaluate the healthiness of the product based on nutrients per 10g"""
+    nutrient_info = {
+        "Nutrients per 10g": {
+            "energy-kcal": nutrients.get("energy-kcal_100g", 0) / 10,
+            "sugars": nutrients.get("sugars_100g", 0) / 10,
+            "fat": nutrients.get("fat_100g", 0) / 10,
+            "proteins": nutrients.get("proteins_100g", 0) / 10,
+            "sodium": nutrients.get("sodium_100g", 0) / 10
+        }
+    }
+
+    # Health Evaluation
+    sugar = nutrient_info["Nutrients per 10g"]["sugars"]
+    fat = nutrient_info["Nutrients per 10g"]["fat"]
+    
+
+    if sugar > 1.0 or fat > 0.5:
+        nutrient_info["Health Evaluation"] = "Less Nutrious"
+    elif sugar == 0 and fat == 0:
+        nutrient_info["Health Evaluation"] = "Nutrious"
+    else:
+        nutrient_info["Health Evaluation"] = "Highly Nutrious "
+
+    return nutrient_info
+
+
+def ingredient_profiling(ingredients_text):
+    """Categorize ingredients into organic, chemical, and other"""
+    organic_keywords = ["natural", "organic"]
+    chemical_keywords = ["aspartame", "phosphoric acid", "acesulfame k", "e150d", "preservative"]
+    
+    ingredients = ingredients_text.lower().split(", ")
+    
+    organic = [ing for ing in ingredients if any(word in ing for word in organic_keywords)]
+    chemical = [ing for ing in ingredients if any(word in ing for word in chemical_keywords)]
+    other = [ing for ing in ingredients if ing not in organic and ing not in chemical]
+
+    return {
+        "Ingredients": ingredients,
+        "Organic": organic,
+        "Chemical": chemical,
+        "Other": other
+    }

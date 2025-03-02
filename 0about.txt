@@ -1,0 +1,50 @@
+In this project I would be gaining the information from the QR code / Barcode from the food items and assigning them a score to them
+throught the formula or 
+
+
+the food ingredients would also be shown 
+and if any ingredients causes any infection should be specified to look out for and alerting 
+09/02/2025
+i had installed the neccessary libraries that are to be used :
+        -> pyzbazar
+        -> panda (numpy " main" and some other too that AI recomended )
+        -> openCV
+        -> pre installed Tinker
+
+12/02/2025
+i had learned about openCV and 
+        -> created a frame to read using the front-cam of the windows
+        -> i also did the uploading part how to upload the image file to 
+        -> i also added the exit button 
+all working fine  
+
+14/02/2025
+I created CLI version of the code that i want to evaluate the follwoing 
+        -> uploading the image from the libraries of the operating system
+        -> scanning the image from the system
+all working fine
+        
+16/02/2025
+        -> i made changes to the CLI and GUI version considering the working of each
+I decoded the QR/ Barcode using pyzbar and the number generated is to 
+be used to get the neccessary information
+
+
+
+
+
+
+20/02/2025
+        -> I install the request library to retrive the information from the openfoodfact or any other sites to get the  required information
+        -> Major issue i got ,the other API planning to use was dropped as it charge payment to use the service 
+        -> I am currently planning to move on with Open Food Fact .org  
+
+
+
+
+25/02/2025
+I had the basic testing done for the application at the development stage for CLI only. here's what I kown
+        -> The clarity of image should be there otherwise the scanner won't detect the barcode and the frame should have the barcode focus
+        -> The picture upload should have the same barcode focus and clear image and 
+        -> Mainly I identify product on Open Food Fact only so products not present in the open food fact would return a error and i don't have any other application
+If I have to specify the eficency of the current stage would be about 20% as i don't get the information of all the product and if it's feasible i could send the barcode number to the ChatGPT and get the info and then analyze it 

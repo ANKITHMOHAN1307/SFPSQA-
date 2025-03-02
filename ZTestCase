@@ -1,0 +1,29 @@
+The Test Case i would be testing to anlazye and give the product ingredients and nutreint value to
+here's the upload test case for the application
+- The first test 
+  -> location of image C:/Users/ANKITH MOHAN/Downloads/front_en.3.full.jpg
+  ->The output prouduces are
+  **Nutrient Profiling:**
+  - Nutrients per 10g: {'energy-kcal': 4.3, 'sugars': 1.09, 'fat': 0.0, 'proteins': 0.0, 'sodium': 0.00030000000000000003}
+  - Health Evaluation: Unhealthy
+    **Ingredient Profiling:**
+  - Ingredients: contains caffeine
+  - Organic: None
+  - Chemical: None
+  - Other: contains caffeine
+
+Here's the Scan Test Case for the application
+- The first test   
+  -> location of image at my phone downlaods 
+  **Nutrient Profiling:**
+  - Nutrients per 10g: {'energy-kcal': 61.0, 'sugars': 0.0, 'fat': 4.8, 'proteins': 2.6, 'sodium': 0.073}
+  - Health Evaluation: Unhealthy
+  **Ingredient Profiling:**
+  - Ingredients: peanuts (89%), edible vegetable (palmolein, cotton seed, rice bran) and lodised salt (1.6%). allergen information: contains nut.
+  - Organic: None
+  - Chemical: None
+  - Other: peanuts (89%), edible vegetable (palmolein, cotton seed, rice bran) and lodised salt (1.6%). allergen information: contains nut.
+- The second test 
+  -location of the image at my phone downloads
+   output very long
+   
