@@ -30,21 +30,36 @@ I decoded the QR/ Barcode using pyzbar and the number generated is to
 be used to get the neccessary information
 
 
-
+Currently fine working But ,
 
 
 
 20/02/2025
         -> I install the request library to retrive the information from the openfoodfact or any other sites to get the  required information
         -> Major issue i got ,the other API planning to use was dropped as it charge payment to use the service 
-        -> I am currently planning to move on with Open Food Fact .org  
-
+        -> I am currently planning to move on with Open Food Fact .org only 
+Still Facing the issue for many products unable to scan
 
 
 
 25/02/2025
 I had the basic testing done for the application at the development stage for CLI only. here's what I kown
         -> The clarity of image should be there otherwise the scanner won't detect the barcode and the frame should have the barcode focus
-        -> The picture upload should have the same barcode focus and clear image and 
-        -> Mainly I identify product on Open Food Fact only so products not present in the open food fact would return a error and i don't have any other application
-If I have to specify the eficency of the current stage would be about 20% as i don't get the information of all the product and if it's feasible i could send the barcode number to the ChatGPT and get the info and then analyze it 
+        -> The picture upload should have the same, barcode focus and clear image and etc
+        -> Mainly It identify product on Open Food Fact only so products not present in the open food fact would return a error and i don't have any other api to used
+If I have to specify the eficency of the current stage would be about 10% as i don't get the information of all the product and if it's feasible i could send the barcode number to the ChatGPT and get the info and then analyze it 
+
+
+28/02/2025
+I got how to evaluate the packet information on two basis 
+        ->Nutrient Profiling 
+                where i take the fat and sugar present in with respect to 10g  assign them nutrious ,less nutrious and highly nutrious
+        ->ingredient Profiling
+                where i just assigned some predefined terms for organic and chemical get them in the respecitve list organic and chemical if any other information present will be in others list
+
+
+02/03/2025
+I created the Exe file for the CLI version of the application and Tested with my predefined test Case and here's what i got
+        -> I need a good foramtting to show the information
+        -> It shows the result i wanted in test case still
+I also jumped to GuI which I think has better foramtting then CLI version

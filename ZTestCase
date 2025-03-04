@@ -2,15 +2,27 @@ The Test Case i would be testing to anlazye and give the product ingredients and
 here's the upload test case for the application
 - The first test 
   -> location of image C:/Users/ANKITH MOHAN/Downloads/front_en.3.full.jpg
-  ->The output prouduces are
+  ->The output prouduced are
   **Nutrient Profiling:**
   - Nutrients per 10g: {'energy-kcal': 4.3, 'sugars': 1.09, 'fat': 0.0, 'proteins': 0.0, 'sodium': 0.00030000000000000003}
   - Health Evaluation: Unhealthy
-    **Ingredient Profiling:**
+  **Ingredient Profiling:**
   - Ingredients: contains caffeine
   - Organic: None
   - Chemical: None
   - Other: contains caffeine
+- The Second Test
+ -> location of image "C:\Users\ANKITH MOHAN\Downloads\front_en.3.full (1).jpg"
+ -> the Ouptut produeced are 
+  **Nutrient Profiling:**
+  - Nutrients per 10g: {'energy-kcal': 2.0, 'sugars': 0.12, 'fat': 0.12, 'proteins': 0.12, 'sodium': 0.0}
+  - Health Evaluation: Highly Nutrious
+  **Ingredient Profiling:**
+  - Ingredients: water, milk, milk solids, lodized salt, spice oleoresin (0.05%) (capsaicin, gingerol, cuminaldehyde), seasonings, black salt, active lactic culture with probiotics bifidobacterium animalis subsp. lactis (viable no. 10° cfu/serving size/day).
+  - Organic: None
+  - Chemical: None
+  - Other: water, milk, milk solids, lodized salt, spice oleoresin (0.05%) (capsaicin, gingerol, cuminaldehyde), seasonings, black salt, active lactic culture with probiotics bifidobacterium animalis subsp. lactis (viable no. 10° cfu/serving size/day).
+
 
 Here's the Scan Test Case for the application
 - The first test   
@@ -26,4 +38,16 @@ Here's the Scan Test Case for the application
 - The second test 
   -location of the image at my phone downloads
    output very long
-   
+   **Nutrient Profiling:**
+  - Nutrients per 10g: {'energy-kcal': 52.2, 'sugars': 0.12, 'fat': 4.08, 'proteins': 1.47, 'sodium': 0.006}
+  - Health Evaluation: Less Nutrious
+  
+ **Ingredient Profiling:**
+  - Ingredients: cocoa solids, emulsifiers (322,476). nutritional information 12 servings per container cacao ultimate dark chocolate serving size 10 g amount per 100 g % rda* energy (kcal) 522 3% total fat (g) 40.8 6% saturated fat (g) 23.1 10% trans fat (g) 0.0 0% cholesterol (mg) 0 carbohydrate (g) 28.4 total sugars (g) 1.2 added sugars (g) 0.0 0% protein (g) 14.7 sodium (mg) 60 0% #rda stands for recommended dietary allowance per serving * average values chocolate indulgence it's the pinnacle of dark chocolate that contains 99% cacao sourced from some of the finest cocoa producing regions of the world. this is pure bliss for the true chocolate connoisseur. manufactured by: kaira district co-operative milk producers' union ltd., anand 388 001, gujarat, india. at food complex mogar, mogar-388 340, india. lic. no. 10014021001010. marketed by: gujarat co-operative milk marketing federation ltd., anand - 388 001, gujarat, india. website: www.amul.com fssai lic. no. 10012021000071 we appreciate your feedback. contact our customer care executive at: 1800 258 3333 (toll free) [6 am-9pm]  2 gcmmf ltd., anand - 388 001 follow us on: f/amul.coop, @amul coop, famul india to know more about amul, please point your device here. net weight: 125 g store in cool, dry and hygienic place. after opening, refrigerate and use the content within 2 months or expiry date, whichever is earlier. important: temperature and humidity shocks may cause white layer without affecting quality of product for consumption. for mrp (incl. of all taxes), date of packaging (pkd.) & expiry (exp.), batch no. (bn), see below. #160.00 fkd. 08 may/2 exp 07 may 2 bn. :kil1283 amul the taste of ledia 8 901262 071864
+  - Organic: None
+  - Chemical: None
+  - Other: cocoa solids, emulsifiers (322,476). nutritional information 12 servings per container cacao ultimate dark chocolate serving size 10 g amount per 100 g % rda* energy (kcal) 522 3% total fat (g) 40.8 6% saturated fat (g) 23.1 10% trans fat (g) 0.0 0% cholesterol (mg) 0 carbohydrate (g) 28.4 total sugars (g) 1.2 added sugars (g) 0.0 0% protein (g) 14.7 sodium (mg) 60 0% #rda stands for recommended dietary allowance per serving * average values chocolate indulgence it's the pinnacle of dark chocolate that contains 99% cacao sourced from some of the finest cocoa producing regions of the world. this is pure bliss for the true chocolate connoisseur. manufactured by: kaira district co-operative milk producers' union ltd., anand 388 001, gujarat, india. at food complex mogar, mogar-388 340, india. lic. no. 10014021001010. marketed by: gujarat co-operative milk marketing federation ltd., anand - 388 001, gujarat, india. website: www.amul.com fssai lic. no. 10012021000071 we appreciate your feedback. contact our customer care executive at: 1800 258 3333 (toll free) [6 am-9pm]  2 gcmmf ltd., anand - 388 001 follow us on: f/amul.coop, @amul coop, famul india to know more about amul, please point your device here. net weight: 125 g store in cool, dry and hygienic place. after opening, refrigerate and use the content within 2 months or expiry date, whichever is earlier. important: temperature and humidity shocks may cause white layer without affecting quality of product for consumption. for mrp (incl. of all taxes), date of packaging (pkd.) & expiry (exp.), batch no. (bn), see below. #160.00 fkd. 08 may/2 exp 07 may 2 bn. :kil1283 amul the taste of ledia 8 901262 071864j
+
+
+  ** STill the product highly based on if the OPENWORLDFOODFACT have it or not**
+   **Currently I would say the efficency around 10%**
