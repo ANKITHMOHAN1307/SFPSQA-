@@ -26,19 +26,34 @@ def nutrient_profiling(nutrients):
 
 
 def ingredient_profiling(ingredients_text):
-    """Categorize ingredients into organic, chemical, and other"""
-    organic_keywords = ["natural", "organic"]
-    chemical_keywords = ["aspartame", "phosphoric acid", "acesulfame k", "e150d", "preservative"]
+    """Categorize ingredients into organic, chemical, and overlapping (both organic and chemical)."""
+    organic_keywords = [
+        "natural", "organic", "wheat", "sugar", "salt", "honey", "fruit", "vegetable", 
+        "spice", "herb", "flour", "oil", "water", "milk", "butter", "egg", "turmeric", 
+        "cumin", "coriander", "ginger", "garlic", "onion", "tomato", "mustard", "coconut", 
+        "sunflower", "jaggery", "curry leaves", "mint", "cilantro"
+    ]
+    chemical_keywords = [
+        "aspartame", "phosphoric acid", "acesulfame k", "e150d", "preservative", 
+        "artificial flavor", "artificial color", "sodium benzoate", "potassium sorbate", 
+        "monosodium glutamate", "msg", "xanthan gum", "guar gum", "citric acid", 
+        "acetic acid", "tartrazine", "caramel color"
+    ]
     
     ingredients = ingredients_text.lower().split(", ")
     
     organic = [ing for ing in ingredients if any(word in ing for word in organic_keywords)]
     chemical = [ing for ing in ingredients if any(word in ing for word in chemical_keywords)]
+    overlapping = [ing for ing in ingredients if ing in organic and ing in chemical]
     other = [ing for ing in ingredients if ing not in organic and ing not in chemical]
 
-    return {
-        "Ingredients": ingredients,
-        "Organic": organic,
-        "Chemical": chemical,
-        "Other": other
-    }
+    result = {}
+    if organic:
+        result["Organic"] = organic
+    if chemical:
+        result["Chemical"] = chemical
+    if overlapping:
+        result["Overlapping"] = overlapping
+    if other:
+        result["Other"] = other
+    return result
