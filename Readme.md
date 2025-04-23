@@ -160,4 +160,4 @@ GitHub: https://github.com/ANKITHMOHAN1307/SQFA
 Thank you for using SFPSQA — your smart assistant for food product quality analysis!
 
 ---
-Answer from Perplexity: pplx.ai/share
+
