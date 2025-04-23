@@ -153,7 +153,7 @@ For questions, issues, or contributions, please contact:
 
 **Your Name**  
 Email: ankith1092@gmail.com 
-GitHub: https://github.com/ANKITHMOHAN1307/SQFA
+GitHub: https://github.com/ANKITHMOHAN1307/SFPSQA
 
 ---
 
