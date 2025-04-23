@@ -65,7 +65,7 @@ pyzbar
 1. **Launch the Application:**
 
 ```bash
-python 2GUI.py
+python 2GUI.exe
 ```
 
 2. **Choose an Option:**
