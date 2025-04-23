@@ -1,119 +1,129 @@
 import tkinter as tk
-from Scanning import scanner  
-from Upload import upload_image
-from Decoding import decode_from_scan, decode_from_upload
+from tkinter import messagebox
 from PIL import Image, ImageTk
 import os
+from runner import run_32bit_script
+from Dashboard import Dashboard
+from Decoding import decode_from_scan, decode_from_upload
+import json
+from chart import plot_and_save_chart
+
+class SFPSQAApp:
+    def __init__(self):
+        self.root = tk.Tk()
+        self.root.title("SFPSQA")
+        self.root.geometry("600x500")
+        self.root.resizable(False, False)
+        self._show_splash()
+
+    def _show_splash(self):
+        splash = tk.Frame(self.root)
+        splash.pack(fill="both", expand=True)
+
+        # Use absolute path for splash background
+        splash_bg_path = os.path.join(self._get_script_dir(), "Images", "Bac.jpg")
+        self._setup_background(splash_bg_path, splash)
+
+        label = tk.Label(splash, text="SFPSQA APP", font=("Times New Roman", 30, "bold"), bg="white", fg="green")
+        label.place(relx=0.5, rely=0.5, anchor="center")
+
+        self.root.after(5000, lambda: self._launch_main(splash))
+
+    def _launch_main(self, splash):
+        splash.destroy()
+
+        # Use absolute path for main background
+        main_bg_path = os.path.join(self._get_script_dir(), "Images", "Bac.jpg")
+        self._setup_background(main_bg_path, self.root)
+        self._setup_main_window()
+
+    def _setup_background(self, image_path, parent):
+        # image_path is now absolute, so no need to join with cwd
+        original_img = Image.open(image_path)
+        width = parent.winfo_width() or 600
+        height = parent.winfo_height() or 500
+        resized = original_img.resize((width, height), Image.Resampling.LANCZOS)
+        self.bg_photo = ImageTk.PhotoImage(resized)
+
+        if hasattr(self, 'bg_label') and self.bg_label.winfo_exists():
+            self.bg_label.destroy()
+
+        self.bg_label = tk.Label(parent, image=self.bg_photo)
+        self.bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+        self.bg_label.lower()
+
+        def resize_bg(event):
+            resized = original_img.resize((event.width, event.height), Image.Resampling.LANCZOS)
+            self.bg_photo = ImageTk.PhotoImage(resized)
+            self.bg_label.config(image=self.bg_photo)
+            self.bg_label.image = self.bg_photo
+
+        parent.bind("<Configure>", resize_bg)
+
+    def _setup_main_window(self):
+        tk.Label(self.root, text="PROVIDE THE QR/BARCODE:", font=("Times New Roman", 14, "bold"), bg="white").pack(pady=10)
+
+        self.upload_icon = self._load_icon(os.path.join("Images", "upload.png"), (130, 70))
+        self.scan_icon = self._load_icon(os.path.join("Images", "Barcode_Scan.png"), (130, 60))
+
+        tk.Button(self.root, text="UPLOAD", image=self.upload_icon, compound="top", font=("Arial", 10), command=self._on_upload_button_click).pack(pady=20)
+        tk.Button(self.root, text="SCAN", image=self.scan_icon, compound="top", font=("Arial", 10), command=self._on_scan_button_click).pack(pady=20)
+        tk.Button(self.root, text='EXIT', bg="white", font=("Arial", 18), command=self.root.destroy).pack(pady=20)
+
+    def _load_icon(self, relative_path, size):
+        try:
+            abs_icon_path = os.path.join(self._get_script_dir(), relative_path)
+            img = Image.open(abs_icon_path).resize(size, Image.Resampling.LANCZOS)
+            return ImageTk.PhotoImage(img)
+        except Exception as e:
+            print(f"Error loading icon '{relative_path}': {e}")
+            return None
+
+    def _on_upload_button_click(self):
+        result = run_32bit_script("Upload.py")
+        print(f"Result from run_32bit_script: {result}, type: {type(result)}")
+        try:
+            result_dict = json.loads(result)  # Parse JSON string to a dictionary
+            if "barcode" in result_dict:
+                product_info = decode_from_upload(result_dict["barcode"])
+            else:
+                product_info = result_dict
+        except json.JSONDecodeError:
+            product_info = {"Error": "Invalid JSON format"}  # Handle the case where it's not valid JSON
+        self._handle_product_info(product_info)
+
+    def _on_scan_button_click(self):
+        result = run_32bit_script("Scanning.py")
+        print(f"Result from run_32bit_script: {result}, type: {type(result)}")
+        try:
+            result_dict = json.loads(result)  # Parse JSON string to a dictionary
+            if "barcode" in result_dict:
+                product_info = decode_from_upload(result_dict["barcode"])
+            else:
+                product_info = result_dict
+        except json.JSONDecodeError:
+            product_info = {"Error": "Invalid JSON format"}  # Handle the case where it's not valid JSON
+        self._handle_product_info(product_info)
 
 
-# Main Window
-root = tk.Tk()
-root.title("SFPSQA")
-root.geometry("359x550")  # Size
-root.configure(bg="lightblue", bd=2, relief="solid")  # Add border to the main window
 
-label = tk.Label(root, text="PROVIDE THE QR/BARCODE :", bg="lightblue", font=("Arial", 14, "bold"))
-label.pack(pady=10, padx=30)
-
-def open_result_window(product_info):
-    """Opens a new window to display product details."""
-    if product_info:
-        root.withdraw()  # Hide the root window
-
-        result_window = tk.Toplevel()
-        result_window.title("Product Details")
-        result_window.geometry("359x550")
-        result_window.configure(bg="lightblue", bd=2, relief="solid")  # Add border to the result window
-
-        if "Error" in product_info:
-            label = tk.Label(result_window, text=product_info["Error"], fg="red", bg="lightblue", font=("Arial", 12))
-            label.pack(pady=10)
+    def _handle_product_info(self, product_info):
+        if not product_info or "Error" in product_info:
+            messagebox.showerror("Error", product_info.get("Error", "NO BARCODE FOUND"))
         else:
-            label = tk.Label(result_window, text=f"Title: {product_info['Title']}", font=("Arial", 12, "bold"), wraplength=350, justify="center", bg="lightblue")
-            label.pack(pady=10)
+            self._open_dashboard(product_info)
 
-            brand_label = tk.Label(result_window, text=f"Brand: {product_info['Brand']}", wraplength=350, justify="center", bg="lightblue", font=("Arial", 12))
-            brand_label.pack(pady=5)
+    def _open_dashboard(self, product_info):
+        self.root.withdraw()
+        Dashboard(product_info, master=self.root)
 
-            category_label = tk.Label(result_window, text=f"Category: {product_info['Category']}", wraplength=350, justify="center", bg="lightblue", font=("Arial", 12))
-            category_label.pack(pady=5)
+    def _get_script_dir(self):
+        # Returns the directory where this script (2GUI.py) is located
+        return os.path.dirname(os.path.abspath(__file__))
 
-            serving_label = tk.Label(result_window, text=f"Serving Size: {product_info['Serving Size']}", wraplength=350, justify="center", bg="lightblue", font=("Arial", 12))
-            serving_label.pack(pady=5)
+    def run(self):
+        self.root.mainloop()
 
-            nutrient_button = tk.Button(result_window, text="Nutrient Profiling", command=lambda: show_profiling("Nutrient", product_info, result_window), wraplength=350, justify="center", bg="lightgreen", font=("Arial", 12))
-            nutrient_button.pack(pady=10)
-
-            ingredient_button = tk.Button(result_window, text="Ingredient Profiling", command=lambda: show_profiling("Ingredient", product_info, result_window), wraplength=350, justify="center", bg="lightgreen", font=("Arial", 12))
-            ingredient_button.pack(pady=10)
-
-        def go_back():
-            result_window.destroy()
-            root.deiconify()  # Reopen the main window
-
-        back_button = tk.Button(result_window, text="Back", command=go_back, bg="lightgreen", font=("Arial", 12))
-        back_button.pack(pady=10)
-
-def show_profiling(profiling_type, product_info, parent_window):
-    """Displays profiling details in a new window."""
-    parent_window.withdraw()  # Hide the result window
-
-    profiling_window = tk.Toplevel()
-    profiling_window.title(f"{profiling_type} Profiling")
-    profiling_window.geometry("359x550")
-    profiling_window.configure(bg="lightblue", bd=2, relief="solid")  # Add border to the profiling window
-
-    profiling_label = tk.Label(profiling_window, text=f"{profiling_type} Profiling", font=("Arial", 12, "bold"), bg="lightblue")
-    profiling_label.pack(pady=10)
-
-    details = product_info.get(f"{profiling_type} Profiling", {})
-    if not details:
-        detail_label = tk.Label(profiling_window, text="No data available.", fg="red", bg="lightblue", font=("Arial", 12))
-        detail_label.pack()
-    else:
-        # Display the description separately
-        description_label = tk.Label(profiling_window, text="Description:", font=("Arial", 12, "bold"), bg="lightblue")
-        description_label.pack(pady=5)
-
-        for key, value in details.items():
-            detail_label = tk.Label(profiling_window, text=f"{key}: {value}", wraplength=350, justify="left", bg="lightblue", font=("Arial", 12))
-            detail_label.pack(pady=2)
-
-        
-
-    def go_back():
-        profiling_window.destroy()
-        parent_window.deiconify()  # Reopen the result window
-
-    back_button = tk.Button(profiling_window, text="Back", command=go_back, bg="lightgreen", font=("Arial", 12))
-    back_button.pack(pady=10)
-
-# Upload Button
-def on_Upload_button_click():
-    print("Upload button clicked!")
-    product_info = upload_image()
-    open_result_window(product_info)  # Open result window after successful upload
-
-upload_button = tk.Button(root, text="UPLOAD", command=on_Upload_button_click, bg="lightgreen", font=("Arial", 12))
-upload_button.pack(pady=50)
-
-# Scan Button
-def on_Scan_button_click():
-    print("Scan button clicked!")
-    product_info = scanner()
-    open_result_window(product_info)  # Open result window after successful scan
-
-scan_button = tk.Button(root, text="SCAN", command=on_Scan_button_click, bg="lightgreen", font=("Arial", 12))
-scan_button.pack(pady=50)
-
-# Exit Button
-def on_Exit_button_click():
-    print("Exiting The Application")
-    root.destroy()
-
-exit_button = tk.Button(root, text='EXIT', command=on_Exit_button_click, bg="lightgreen", font=("Arial", 12))
-exit_button.pack(pady=50)
-
-# Run the application
-root.mainloop()
-exit()
+if __name__ == "__main__":
+    app = SFPSQAApp()
+    app.run()
