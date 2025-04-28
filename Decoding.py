@@ -13,19 +13,18 @@ def get_console_width():
 # Initialize console width
 console_width = get_console_width()
 
-def decode_from_upload(barcode_data):
-    """Decodes uploaded barcode and prints evaluation."""
-    print(f"\n[Upload] Decoded Data: {barcode_data}")
-    # Access `console_width` from here or pass it as an argument if needed
+# def decode_from_upload(barcode_data):
+#     """Decodes uploaded barcode and prints evaluation."""
+#     print(f"\n[Upload] Decoded Data: {barcode_data}")
+#     # Access `console_width` from here or pass it as an argument if needed
 
-def decode_from_scan(barcode_data):
-    """Decodes scanned barcode and prints evaluation."""
-    print(f"\n[Scanner] Decoded Data: {barcode_data}")
-    # Access `console_width` from here or pass it as an argument if needed
-# Decoding.py
+# def decode_from_scan(barcode_data):
+#     """Decodes scanned barcode and prints evaluation."""
+#     print(f"\n[Scanner] Decoded Data: {barcode_data}")
+#     # Access `console_width` from here or pass it as an argument if needed
+# # Decoding.py
 
-import requests
-from Evaluation import nutrient_profiling, ingredient_profiling
+
 
 def get_product_details(barcode):
     """Fetch product details using Open Food Facts API."""
