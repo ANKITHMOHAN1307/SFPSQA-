@@ -6,7 +6,6 @@ from runner import run_32bit_script
 from Dashboard import Dashboard
 from Decoding import decode_from_scan, decode_from_upload
 import json
-from chart import plot_and_save_chart
 
 class SFPSQAApp:
     def __init__(self):
@@ -20,7 +19,6 @@ class SFPSQAApp:
         splash = tk.Frame(self.root)
         splash.pack(fill="both", expand=True)
 
-        # Use absolute path for splash background
         splash_bg_path = os.path.join(self._get_script_dir(), "Images", "Bac.jpg")
         self._setup_background(splash_bg_path, splash)
 
@@ -31,14 +29,11 @@ class SFPSQAApp:
 
     def _launch_main(self, splash):
         splash.destroy()
-
-        # Use absolute path for main background
         main_bg_path = os.path.join(self._get_script_dir(), "Images", "Bac.jpg")
         self._setup_background(main_bg_path, self.root)
         self._setup_main_window()
 
     def _setup_background(self, image_path, parent):
-        # image_path is now absolute, so no need to join with cwd
         original_img = Image.open(image_path)
         width = parent.winfo_width() or 600
         height = parent.winfo_height() or 500
@@ -68,7 +63,31 @@ class SFPSQAApp:
 
         tk.Button(self.root, text="UPLOAD", image=self.upload_icon, compound="top", font=("Arial", 10), command=self._on_upload_button_click).pack(pady=20)
         tk.Button(self.root, text="SCAN", image=self.scan_icon, compound="top", font=("Arial", 10), command=self._on_scan_button_click).pack(pady=20)
-        tk.Button(self.root, text='EXIT', bg="white", font=("Arial", 18), command=self.root.destroy).pack(pady=20)
+        
+       
+        
+        tk.Button(self.root, text='ABOUT', font=("Arial", 18), command=self._show_about).pack(side="left", padx=20)
+        tk.Button(self.root, text='EXIT',   font=("Arial", 18), command=self.root.destroy).pack(side="right", padx=20)
+
+    def _show_about(self):
+        about_text = """SFPSQA - Smart Food Product Scanner and Quality Analyzer
+
+Features:
+• Scan/upload barcodes
+• Nutritional analysis
+• Ingredient categorization
+• Interactive dashboard
+
+Requirements:
+> Good Network
+> Good Image quality 
+
+Contact:
+ankith1092@gmail.com
+github.com/ANKITHMOHAN1307/SQFA
+
+License: MIT"""
+        messagebox.showinfo("About SFPSQA", about_text)
 
     def _load_icon(self, relative_path, size):
         try:
@@ -83,29 +102,21 @@ class SFPSQAApp:
         result = run_32bit_script("Upload.py")
         print(f"Result from run_32bit_script: {result}, type: {type(result)}")
         try:
-            result_dict = json.loads(result)  # Parse JSON string to a dictionary
-            if "barcode" in result_dict:
-                product_info = decode_from_upload(result_dict["barcode"])
-            else:
-                product_info = result_dict
+            result_dict = json.loads(result)
+            product_info = decode_from_upload(result_dict["barcode"]) if "barcode" in result_dict else result_dict
         except json.JSONDecodeError:
-            product_info = {"Error": "Invalid JSON format"}  # Handle the case where it's not valid JSON
+            product_info = {"Error": "Invalid JSON format"}
         self._handle_product_info(product_info)
 
     def _on_scan_button_click(self):
         result = run_32bit_script("Scanning.py")
         print(f"Result from run_32bit_script: {result}, type: {type(result)}")
         try:
-            result_dict = json.loads(result)  # Parse JSON string to a dictionary
-            if "barcode" in result_dict:
-                product_info = decode_from_upload(result_dict["barcode"])
-            else:
-                product_info = result_dict
+            result_dict = json.loads(result)
+            product_info = decode_from_upload(result_dict["barcode"]) if "barcode" in result_dict else result_dict
         except json.JSONDecodeError:
-            product_info = {"Error": "Invalid JSON format"}  # Handle the case where it's not valid JSON
+            product_info = {"Error": "Invalid JSON format"}
         self._handle_product_info(product_info)
-
-
 
     def _handle_product_info(self, product_info):
         if not product_info or "Error" in product_info:
@@ -118,7 +129,6 @@ class SFPSQAApp:
         Dashboard(product_info, master=self.root)
 
     def _get_script_dir(self):
-        # Returns the directory where this script (2GUI.py) is located
         return os.path.dirname(os.path.abspath(__file__))
 
     def run(self):
